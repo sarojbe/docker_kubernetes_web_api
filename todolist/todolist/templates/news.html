@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="col-md-8">
+        <h3>Breaking News ..</h3>
+          <hr>
+            {% for line in headlines %}
+              <p>{{ line }}</p>
+              <hr>
+            {% else %}
+            <em>No more updates!.</em>
+            {% endfor %}
+    </div>
+</div>
+{% endblock %}

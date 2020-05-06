@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Todo List Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+    <!-- Required meta tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
+
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  {% if title %}
+        <title>TodoList - {{ title }}</title>
+    {% else %}
+        <title>TodoList</title>
+    {% endif %}
+
+</head>
+<body>
+<header class="site-header">
+<nav class="navbar navbar-expand-md navbar-light fixed-top" style="background-color: #04B4AE;">
+    <div class="container">
+
+    <a class="navbar-brand mr-4" href="#">Todolist application</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Menu
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Events calendar</a>
+          <a class="dropdown-item" href="{{ url_for('news') }}">Breaking News</a>
+          <div class="dropdown-divider"></div>
+<!--          <a class="dropdown-item" href="#">Listen to Music</a>-->
+          <a class="dropdown-item" href="#">Translate this page</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('register') }}" tabindex="-1" >Register</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+    </div>
+</nav>
+</header>
+
+
+<main role="main" class="container">
+    <div class="row">
+        <div class="col-md-8">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {%if messages %}
+                {% for category,message in messages %}
+                 <div class="alert alert-{{ category }}">
+                     {{ message }}
+                 </div>
+                {% endfor %}
+                {% endif %}
+            {% endwith %}
+          {% block content %} {% endblock %}
+        </div>
+
+
+
+
+
+              <div class="content-section">
+                <h3>More things to do </h3>
+                <p class='text-muted'>You can pick any you'd like.
+                  <ul class="list-group">
+                    <li class="list-group-item list-group-item-light" onclick="location.href='{{ url_for('login') }}'">Your schedules</li>
+                    <li class="list-group-item list-group-item-light" onclick="alert('No Major Announcements yet!');">Announcements</li>
+    <!--                <li class="list-group-itme list-group-item-light">Daily News Headlines</li>-->
+                    <li class="list-group-item list-group-item-light" onclick="alert('No events yet!');" >Calendars</li>
+                    <li class="list-group-item list-group-item-light" onclick="location.href='{{ url_for('news') }}'">News</li>
+                    <li class="list-group-item list-group-item-light" onclick="location.href='{{ url_for('logout') }}'">Logout</li>
+                  </ul>
+                </p>
+              </div>
+    </div>
+</main>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+</body>
+<br>
+<br>
+<footer>
+    <div class="container">
+        <div class="col-md-8 col-md-10 mx-auto">
+
+            <div style="background-color: #5882F">
+              <p><strong>CISC 5550 Project @Fordham University</strong></p>
+            </div>
+        </div>
+    </div>
+</footer>
+</html>

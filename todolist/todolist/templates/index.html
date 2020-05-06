@@ -1,0 +1,119 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<style>
+        .done {
+            text-decoration: line-through;
+        }
+    </style>
+<div class="container">
+        <h3>{{ username }} <b>Check your schedules & homework </b>...</h3>
+        <table class="table table-striped table-responsive table-hover">
+            <thead class="thead-light">
+                <tr>
+                  <th > Tasks Projects </th>
+                  <th > Due_date </th>
+                  <th >  Status </th>
+                  <th > Actions </th>
+                </tr>
+
+              </thead>
+            <tbody>
+
+            {% for entry in entries %}
+            <tr>
+                <td {% if entry.status=='done' %} class='done' {% endif %}>{{ entry.what_to_do|safe }}</td>
+                <td>{{ entry.due_date|safe }} </td>
+                <td {% if entry.status !='done' %} class='warning' {% endif %}>{{ entry.status|safe }}</td>
+                <td>
+                    <button class ="btn btn-outline-success my-2 my-sm-0" onclick="location.href='/mark/{{ user_id }}/{{ entry.what_to_do|urlencode }}/{{ entry.status|urlencode }}'">mark as done </button>
+                    <button class ="btn btn-outline-danger my-2 my-sm-0" onclick="location.href='/delete/{{ user_id }}/{{ entry.what_to_do|urlencode }}'">delete</button>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td><em>Nothing pending for now.</em></td>
+                <td><em>******</em></td>
+                <td><em>******</em></td>
+                <td><em>No action required</em></td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+   <button class ="btn btn-outline-info my-2 my-sm-0" onclick="toggle_entry_form();" id='toggle_button'>add a new item</button>
+
+</div>
+
+<br>
+<div class="container">
+    <form action="/add/{{ user_id }}" method="POST" id="add-form" style="display:none">
+
+        <div class="container">
+                <div class="form-group">
+                    <div class="col-xs-2">
+                        <label for="what_to_do">More tasks?</label>
+                        <select class="form-control" name="what_to_do" id="what_to_do">
+                                  <option value="homework">homework</option>
+                                  <option value="projects">projects</option>
+                                  <option value="research">research</option>
+                                  <option value="nothing">nothing</option>
+                        </select>
+                    </div>
+
+                    <div class="col-xs-2">
+                        <label for="status">Status</label>
+                        <select class="form-control" name="status" id="status">
+                                  <option value="processing">processing</option>
+                                  <option value="not processed">not started</option>
+                                  <option value="done">done</option>
+                        </select>
+                    </div>
+
+                    <div class="col-xs-2">
+                      <label for="due_date">When:</label>
+                      <input class="form-control" name="due_date" type="text" data-date-format="dd/mm/yyyy" id="datepicker">
+                    </div>
+                </div>
+         </div>
+               <br>
+                <div class="col-xs-2">
+                        <div class="form-control-label" >
+                            <input class="btn btn-outline-info my-2 my-sm-0" type="submit" value="Save the new item" />
+                        </div>
+                </div>
+
+
+
+    </form>
+</div>
+
+<script>
+        var show_entry_form = false;
+
+        function toggle_entry_form() {
+            if (show_entry_form) {
+                $('#add-form').hide();
+                $('#toggle_button').text("Add new item");
+            } else {
+                $('#add-form').show();
+                $('#toggle_button').text("Cancel the new entry");
+            }
+            show_entry_form = !show_entry_form;
+        };
+
+
+</script>
+
+<script>
+$('#datepicker').datepicker({
+        weekStart: 1,
+        daysOfWeekHighlighted: "6,0",
+        autoclose: true,
+        todayHighlight: true,
+    });
+    $('#datepicker').datepicker("setDate", new Date());
+</script>
+
+{% endblock %}
+

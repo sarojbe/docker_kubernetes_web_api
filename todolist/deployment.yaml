@@ -1,0 +1,21 @@
+apiVersion: apps/latest
+kind: Deployment
+metadata:
+  name: todolist-deployment
+  labels:
+    app: todolist
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: todolist
+  template:
+    metadata:
+      labels:
+        app: todolist
+    spec:
+      containers:
+      - name: todolist
+        image: gcr.io/cisc5550-272204/todolist:latest
+        ports:
+        - containerPort: 5000
