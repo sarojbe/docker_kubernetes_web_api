@@ -9,7 +9,7 @@ from todolist.newsreaders import News
 API_URL='http://127.0.0.1:5001'
 #API_URL='http://0.0.0.0:5001'
 
-@app.route("/")
+@app.route("/")  #dont override decorator, not a good idea
 @app.route("/home")
 def home():
     return render_template('home.html')
@@ -76,26 +76,13 @@ def register():
 @app.route("/add/<user_id>", methods=['POST'])
 def add_entry(user_id):
     user_id = urllib.parse.quote(user_id)
-    # form = TodoForm()
-    # what_to_do = form.what_to_do.data
-    # due_date = form.due_date.data
-    # status = form.status.data
-    # try:
-    #     entry=requests.post( url=API_URL+'/api/items/'+user_id,
-    #                    json = {
-    #                             "what_to_do": what_to_do,
-    #                             "due_date":due_date,
-    #                             "status": status
-    #                             } )
-    # working seg
     try:
         entry=requests.post( url=API_URL+'/api/items/'+user_id,json={
                   "what_to_do": request.form['what_to_do'],
                    "due_date": request.form['due_date'],
                    "status" : request.form['status']
                   })
-        #print(entry)
-        ##
+
         if entry.status_code == 200:
             flash("item added successfully", 'success')
             return redirect(url_for('show_list', user_id=user_id))
@@ -138,6 +125,7 @@ def mark_as_done(user_id,item,status):
         flash('No items to update','info')
     return redirect(url_for('show_list',user_id=user_id))
 
+# this route calls NEWS API 
 @app.route("/news")
 def news():
     headlines = News().getNews()
