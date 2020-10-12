@@ -12,6 +12,6 @@ WebAPI will be hosted in Kubernetes clustered environment with auto scaling
 
 # caveats and limitations
 Not a SPA  . Angular/others can be used to redesign the web app part.
-API is robust enough . No session validation, tokenization added
+API may not be robust enough . No session validation, tokenization added
 As the project was intended to have apps run in a containerzed env, the functionalities of the app is kept minimal.
 
