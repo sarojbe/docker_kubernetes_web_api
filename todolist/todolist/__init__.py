@@ -4,6 +4,6 @@ from flask import Flask
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY']='saroj'
-API_URL='http://127.0.0.1:5001'
+app.config['SECRET_KEY']='addanythingbetterthanthis'
+API_URL='http://127.0.0.1:5001'  # use your API hosted IP address, port
 from todolist import routes
