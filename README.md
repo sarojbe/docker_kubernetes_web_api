@@ -1,5 +1,5 @@
 # docker_kubernetes_web_api
-This project aimed at creating a web application that will connect to multiple other APIs( internal and external ) to render data to users.
+This project aimed at creating a web application that will connect to multiple other APIs( internal and external ) to render data to users via a frontend app.
 Primary focus is to have containerized application and hosting the docker images in Google Cloud Registry. 
 Both Web application and Api run on Kubernetes cluster 
 Major parts to the project:
