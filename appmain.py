@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 #from flask_restful import Api, Resource
 import pymysql
 
-from flask_bcrypt import Bcrypt
+from flask_bcrypt import Bcrypt # For Encrypting password
 bcrypt=Bcrypt()
 
 
@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 app.secret_key = binascii.hexlify(os.urandom(12))
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@localhost:3306/{MYSQL_DATABASE}'
-app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:saroj123@db:3606/intv'
+app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://<user>:<password>@<dbname>:3606/intv'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db= SQLAlchemy(app)
@@ -49,7 +49,7 @@ class entries(db.Model):
 
 @app.route("/")
 def home():
-    return "<h1>This is Flask API page</h1>"
+    return "<h1>This is Flask API page</h1>" # API landing page vanilla
 
 @app.route("/api/items/<user_id>")
 def show_items(user_id):
@@ -104,12 +104,6 @@ def update_item(user_id, item,status):
     status = urllib.parse.unquote(status)
     check_entry = entries.query.filter_by(user_id=user_id,status=status,what_to_do=item).first()
     if check_entry:
-        # for i in check_entry:
-        #         # tdlistn = dict(#user_id=entry.user_id,
-        #         #           what_to_do=i.what_to_do,
-        #         #           due_date=i.due_date,
-        #         #           status=i.status)
-        #         i.status='DONE'
         check_entry.status='done'
         db.session.commit()
     return jsonify({"message": "nothing updated"})
