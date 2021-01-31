@@ -6,12 +6,13 @@ Major parts to the project:
 WebApplication build with Python Flask Framework Bootstrap
 Database Mysql
 WebAPI  Flask
-External APIs
+External Public APIs
 Webapp is intended to run on stanadlone node/vm/container
-WebAPI will be hosted in Kubernetes clustered environment with auto scaling
+WebAPI will be hosted in Kubernetes clustered environment with auto scaling.
 
 # caveats and limitations
 Not a SPA  . Angular/others can be used to redesign the web app part.
-API may not be robust enough . No session validation, tokenization added
-As the project was intended to have apps run in a containerzed env, the functionalities of the app is kept minimal.
+API may not be robust enough . No session validation, tokenization added.
+As the project was intended to have apps run in a containerized environment and hosted on Kubernetes cluster,
+the functionalities of the app is kept minimal.
 
